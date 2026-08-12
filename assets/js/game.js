@@ -136,7 +136,7 @@ function esquivar(ev){                  // la trampa: una vez por partida
   msg.textContent=BURLAS2[Math.floor(Math.random()*BURLAS2.length)];
   caos.appendChild(msg);
   sonar(3);                                     // 3 risas seguidas
-  [[8,10],[62,8],[30,58]].forEach(([l,t])=>{    // y 3 gatos más en pantalla
+  [[8,10],[62,32],[30,58]].forEach(([l,t])=>{   // y 3 gatos más, libres de la franja del mensaje
     const im=new Image();
     im.src=RUTA_IMG;im.className='foto3 extra';
     im.style.left=l+'vw';im.style.top=t+'vh';
