@@ -4,286 +4,47 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Buscaminas</title>
-<style>
-*{box-sizing:border-box}
-body{margin:0;font-family:system-ui,sans-serif;background:#1b1b22;color:#eee;
-     display:flex;flex-direction:column;align-items:center;gap:14px;padding:18px;min-height:100vh}
-h1{margin:0;font-size:1.3rem;letter-spacing:.25em}
-#hud{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:center;
-     background:#25252f;padding:10px 14px;border-radius:10px}
-select,button{font:inherit;padding:6px 10px;border-radius:8px;border:1px solid #444;
-     background:#33333f;color:#eee;cursor:pointer}
-.marcador{font-variant-numeric:tabular-nums;background:#111;padding:6px 12px;border-radius:8px;min-width:84px;text-align:center}
-#tablero{display:grid;grid-template-columns:repeat(var(--cols,9),var(--tam,30px));gap:2px;touch-action:manipulation}
-.celda{width:var(--tam,30px);height:var(--tam,30px);display:flex;align-items:center;justify-content:center;
-     font-weight:700;background:#4a4a5a;border-radius:4px;user-select:none;cursor:pointer;
-     font-size:calc(var(--tam,30px)*.6);line-height:1}
-.celda:hover{background:#5a5a6e}
-.celda.rev{background:#2c2c36;cursor:default}
-.celda.rev:hover{background:#2c2c36}
-.celda.boom{background:#e11}
-.n1{color:#6cf}.n2{color:#7e7}.n3{color:#f88}.n4{color:#b9f}
-.n5{color:#fc6}.n6{color:#6ff}.n7{color:#fff}.n8{color:#aaa}
-.pista{opacity:.6;font-size:.85rem}
-
-/* ---------- caos ---------- */
-#caos{position:fixed;inset:0;z-index:99;overflow:hidden;display:grid;place-items:center;
-      animation:strobe .1s steps(1) infinite}
-#caos[hidden]{display:none}
-@keyframes strobe{0%{background:#f0f}17%{background:#0ff}33%{background:#ff0}
-                  50%{background:#f00}67%{background:#0f0}83%{background:#00f}100%{background:#fff}}
-#pila{position:relative;z-index:2;display:grid;justify-items:center;gap:10px}
-#foto{width:min(46vw,30vh);border:6px solid #000;border-radius:12px;box-shadow:0 0 0 8px #0ff,0 0 40px #f0f;
-      animation:tiembla .1s infinite,late .5s ease-in-out infinite}
-@keyframes late{0%,100%{scale:1}50%{scale:1.12}}
-.foto3{position:absolute;z-index:5;width:min(40vw,34vh);border:6px solid #000;border-radius:12px;
-       box-shadow:0 0 0 8px #ff0;pointer-events:none;
-       animation:tiembla .08s infinite,late .4s ease-in-out infinite}
-#burla{position:relative;z-index:2;text-align:center;font-weight:900;line-height:.95;
-       font-size:clamp(2.2rem,11vw,7rem);color:#fff;padding:0 10px;
-       text-shadow:4px 4px 0 #f0f,-4px -4px 0 #0ff,8px -8px 0 #ff0,-8px 8px 0 #f00;
-       animation:tiembla .07s infinite, gira 1.6s ease-in-out infinite}
-#sub{position:relative;z-index:2;font-size:clamp(1rem,3.5vw,2rem);font-weight:800;color:#000;
-     background:#ff0;padding:6px 14px;border-radius:6px;transform:rotate(-3deg);animation:tiembla .11s infinite}
-@keyframes tiembla{0%{transform:translate(-6px,4px) rotate(-2deg)}
-                   50%{transform:translate(6px,-5px) rotate(2deg)}
-                   100%{transform:translate(-4px,-3px) rotate(-1deg)}}
-@keyframes gira{0%,100%{letter-spacing:0}50%{letter-spacing:.08em}}
-#otra{position:absolute;z-index:3;font-size:clamp(1.1rem,4vw,2.4rem);font-weight:900;
-      padding:14px 26px;border:6px solid #000;border-radius:14px;background:#0f0;color:#000;
-      cursor:pointer;box-shadow:0 0 0 8px #f0f;animation:tiembla .13s infinite}
-#burla2{position:absolute;top:6%;left:50%;transform:translateX(-50%);z-index:4;
-        font-size:clamp(1.2rem,5vw,3rem);font-weight:900;color:#fff;background:#000;
-        padding:10px 18px;border-radius:10px;text-align:center;max-width:92vw;pointer-events:none;
-        animation:tiembla .09s infinite}
-.emoji{position:absolute;font-size:clamp(1.5rem,5vw,3.5rem);z-index:1;pointer-events:none;
-       animation:flota 2s linear infinite}
-@keyframes flota{0%{transform:translateY(0) rotate(0) scale(1)}
-                 50%{transform:translateY(-40px) rotate(180deg) scale(1.6)}
-                 100%{transform:translateY(0) rotate(360deg) scale(1)}}
-@media(prefers-reduced-motion:reduce){
-  #caos{animation-duration:1.2s}
-  #burla,#sub,#otra,#burla2,.emoji,#foto,.foto3{animation-duration:3s}
-}
-/* ---------- victoria ---------- */
-#gane{position:fixed;inset:0;z-index:99;background:#0a2;display:grid;place-items:center;gap:16px;
-      align-content:center;text-align:center}
-#gane[hidden]{display:none}
-#gane h2{font-size:clamp(2rem,8vw,5rem);margin:0}
-</style>
+<meta name="description" content="Buscaminas con tres niveles, cronómetro y una derrota muy poco amable.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💣</text></svg>">
+<link rel="stylesheet" href="assets/css/styles.css">
+<script src="assets/js/game.js" defer></script>
 </head>
 <body>
+
 <h1>BUSCAMINAS</h1>
+
 <div id="hud">
-  <select id="nivel">
+  <select id="nivel" aria-label="Nivel">
     <option value="facil">Fácil · 9×9 · 10 minas</option>
     <option value="medio">Medio · 16×16 · 40 minas</option>
     <option value="dificil">Difícil · 16×30 · 99 minas</option>
   </select>
-  <span class="marcador" id="mMinas">💣 10</span>
-  <span class="marcador" id="mTiempo">⏱ 00:00</span>
+  <span class="marcador" id="mMinas" aria-label="Minas restantes">💣 10</span>
+  <span class="marcador" id="mTiempo" aria-label="Tiempo">⏱ 00:00</span>
   <button id="btnNuevo">Nuevo juego</button>
 </div>
-<div id="tablero"></div>
+
+<main id="tablero"></main>
 <p class="pista">Click = abrir · Click derecho (o mantener pulsado) = bandera 🚩</p>
 
+<!-- derrota -->
 <div id="caos" hidden>
   <div id="pila">
     <div id="burla"></div>
-    <img id="foto" src="img.png" alt="">
+    <img id="foto" src="assets/img/gato.png" alt="">
     <div id="sub"></div>
   </div>
   <button id="otra">JUGAR OTRA VEZ</button>
 </div>
 
+<!-- victoria -->
 <div id="gane" hidden>
   <h2>🎉 ¡GANASTE! 🎉</h2>
   <p id="ganeTiempo"></p>
   <button id="btnGane">Otra partida</button>
 </div>
 
-<script>
-const NIVELES={facil:[9,9,10],medio:[16,16,40],dificil:[16,30,99]};
-const $=id=>document.getElementById(id);
-const boardEl=$('tablero'),selNivel=$('nivel'),mMinas=$('mMinas'),mTiempo=$('mTiempo');
-const caos=$('caos'),burla=$('burla'),sub=$('sub'),otra=$('otra'),gane=$('gane');
+<footer>hecho para perder</footer>
 
-const BURLAS=[['💥 PERDISTE 💥','ni los tres primeros clicks aguantaste'],
-              ['😂 JAJAJAJA 😂','eso fue vergonzoso, en serio'],
-              ['🤡 BOOOOM 🤡','una mina. UNA. y le diste tú solito'],
-              ['💀 SE ACABÓ 💀','mi abuela juega mejor y ni tiene mouse'],
-              ['🔥 EXPLOTASTE 🔥','¿probaste usar el cerebro? dicen que ayuda']];
-const BURLAS2=['🤣 ¡NI AL BOTÓN LE PUDISTE DAR! 🤣',
-               '😭 FALLASTE UN BOTÓN QUE MIDE MEDIA PANTALLA 😭',
-               '👏 IMPRESIONANTE. FALLASTE HASTA EL CLICK. 👏'];
-
-let filas,cols,minas,celdas,generado,terminado,banderas,seg,timer;
-let esquivado=false;                    // el botón huye una vez por partida (se resetea en nuevo())
-
-const risa=new Audio('risa.mp3');
-function sonar(veces){                  // veces reproducciones seguidas, nunca solapadas
-  risa.onended=null;risa.pause();risa.currentTime=0;
-  let n=veces;
-  risa.onended=()=>{if(--n>0){risa.currentTime=0;risa.play().catch(()=>{})}};
-  risa.play().catch(()=>{});
-}
-
-const vecinos=i=>{
-  const f=(i/cols)|0,c=i%cols,v=[];
-  for(let df=-1;df<=1;df++)for(let dc=-1;dc<=1;dc++){
-    if(!df&&!dc)continue;
-    const nf=f+df,nc=c+dc;
-    if(nf>=0&&nf<filas&&nc>=0&&nc<cols)v.push(nf*cols+nc);
-  }
-  return v;
-};
-
-const contar=()=>celdas.forEach((c,i)=>c.n=c.mina?0:vecinos(i).filter(j=>celdas[j].mina).length);
-
-function generar(libre){
-  const prohibido=new Set([libre,...vecinos(libre)]);
-  let puestas=0;
-  while(puestas<minas){
-    const i=Math.floor(Math.random()*celdas.length);
-    if(celdas[i].mina||prohibido.has(i))continue;
-    celdas[i].mina=1;puestas++;
-  }
-  contar();generado=true;
-  timer=setInterval(()=>{seg++;pintarTiempo()},1000);
-}
-
-const fmt=s=>String((s/60)|0).padStart(2,'0')+':'+String(s%60).padStart(2,'0');
-const pintarTiempo=()=>mTiempo.textContent='⏱ '+fmt(seg);
-const pintarMinas=()=>mMinas.textContent='💣 '+(minas-banderas);
-
-function pintar(i){
-  const c=celdas[i],d=c.el;
-  d.className='celda'+(c.rev?' rev':'');
-  d.textContent=c.rev?(c.mina?'💣':c.n||''):(c.flag?'🚩':'');
-  if(c.rev&&c.n&&!c.mina)d.classList.add('n'+c.n);
-}
-
-function abrir(i){
-  if(terminado)return;
-  const c=celdas[i];
-  if(c.flag||c.rev)return;
-  if(!generado)generar(i);
-  if(c.mina){c.rev=1;pintar(i);c.el.classList.add('boom');return perder()}
-  const pila=[i];
-  while(pila.length){
-    const j=pila.pop(),cj=celdas[j];
-    if(cj.rev||cj.flag)continue;
-    cj.rev=1;pintar(j);
-    if(!cj.n)vecinos(j).forEach(k=>{if(!celdas[k].rev)pila.push(k)});
-  }
-  if(celdas.filter(c=>c.rev).length===celdas.length-minas)ganar();
-}
-
-function marcar(i){
-  if(terminado||!generado)return;
-  const c=celdas[i];
-  if(c.rev)return;
-  c.flag^=1;banderas+=c.flag?1:-1;
-  pintar(i);pintarMinas();
-}
-
-function fin(){terminado=true;clearInterval(timer);timer=null}
-const limpiarCaos=()=>caos.querySelectorAll('.extra').forEach(e=>e.remove());
-
-function ganar(){
-  fin();
-  $('ganeTiempo').textContent='Tiempo: '+fmt(seg);
-  gane.hidden=false;
-}
-
-function perder(){
-  fin();
-  celdas.forEach((c,i)=>{if(c.mina&&!c.flag){c.rev=1;pintar(i)}});
-  const [t,s]=BURLAS[Math.floor(Math.random()*BURLAS.length)];
-  burla.textContent=t;sub.textContent=s;
-  limpiarCaos();
-  sonar(1);
-  for(let k=0;k<45;k++){
-    const e=document.createElement('span');
-    e.className='emoji extra';
-    e.textContent='💥😂🤡💀🔥🎉👎😭💣🙃'[Math.floor(Math.random()*10)];
-    e.style.left=Math.random()*95+'vw';
-    e.style.top=Math.random()*95+'vh';
-    e.style.animationDelay=-Math.random()*2+'s';
-    caos.appendChild(e);
-  }
-  otra.style.position='absolute';
-  otra.style.left='50%';otra.style.top='75%';otra.style.transform='translate(-50%,-50%)';
-  caos.hidden=false;
-}
-
-function esquivar(ev){
-  if(esquivado)return;
-  esquivado=true;
-  const r=otra.getBoundingClientRect();
-  const px=ev&&ev.clientX!=null?ev.clientX:r.left+r.width/2;
-  const py=ev&&ev.clientY!=null?ev.clientY:r.top+r.height/2;
-  const w=otra.offsetWidth,h=otra.offsetHeight,m=16;
-  // se va a la esquina más lejana del cursor, nunca al lado
-  const esquinas=[[m,m],[innerWidth-w-m,m],[m,innerHeight-h-m],[innerWidth-w-m,innerHeight-h-m]];
-  const [x,y]=esquinas.reduce((a,b)=>
-    Math.hypot(b[0]+w/2-px,b[1]+h/2-py)>Math.hypot(a[0]+w/2-px,a[1]+h/2-py)?b:a);
-  otra.style.transform='none';
-  otra.style.left=x+'px';otra.style.top=y+'px';
-  const msg=document.createElement('div');
-  msg.id='burla2';msg.className='extra';
-  msg.textContent=BURLAS2[Math.floor(Math.random()*BURLAS2.length)];
-  caos.appendChild(msg);
-  sonar(3);                                   // 3 risas seguidas
-  [[8,10],[62,8],[30,58]].forEach(([l,t])=>{  // y 3 gatos más en pantalla
-    const im=new Image();
-    im.src='img.png';im.className='foto3 extra';
-    im.style.left=l+'vw';im.style.top=t+'vh';
-    im.style.animationDelay=-Math.random()+'s';
-    caos.appendChild(im);
-  });
-}
-otra.addEventListener('pointerenter',esquivar);
-otra.addEventListener('click',e=>{ if(!esquivado)return esquivar(e); nuevo() });
-
-function nuevo(){
-  clearInterval(timer);timer=null;
-  [filas,cols,minas]=NIVELES[selNivel.value];
-  celdas=Array.from({length:filas*cols},()=>({mina:0,rev:0,flag:0,n:0}));
-  generado=false;terminado=false;banderas=0;seg=0;esquivado=false;
-  risa.onended=null;risa.pause();risa.currentTime=0;
-  pintarTiempo();pintarMinas();
-  boardEl.style.setProperty('--cols',cols);
-  boardEl.style.setProperty('--tam',Math.max(18,Math.min(32,(innerWidth-50)/cols-2))+'px');
-  boardEl.innerHTML='';
-  celdas.forEach((c,i)=>{
-    const d=document.createElement('div');
-    d.className='celda';
-    d.addEventListener('click',()=>abrir(i));
-    d.addEventListener('contextmenu',e=>{e.preventDefault();marcar(i)});
-    let hold;                                  // móvil: mantener pulsado = bandera
-    d.addEventListener('touchstart',()=>{hold=setTimeout(()=>{marcar(i);hold=0},400)},{passive:true});
-    d.addEventListener('touchend',e=>{if(!hold){e.preventDefault()}clearTimeout(hold)});
-    c.el=d;boardEl.appendChild(d);
-  });
-  caos.hidden=true;gane.hidden=true;limpiarCaos();
-}
-
-$('btnNuevo').onclick=nuevo;
-$('btnGane').onclick=nuevo;
-selNivel.onchange=nuevo;
-addEventListener('resize',()=>boardEl.style.setProperty('--tam',Math.max(18,Math.min(32,(innerWidth-50)/cols-2))+'px'));
-
-// self-check: abrir con #test en la URL y mirar la consola
-if(location.hash==='#test'){
-  filas=3;cols=3;
-  celdas=Array.from({length:9},()=>({mina:0,rev:0,flag:0,n:0}));
-  celdas[4].mina=1;contar();
-  console.assert(vecinos(0).length===3&&vecinos(4).length===8&&vecinos(1).length===5,'vecinos mal');
-  console.assert(celdas.every((c,i)=>i===4||c.n===1),'conteo mal');
-  console.log('self-check OK');
-}
-nuevo();
-</script>
 </body>
 </html>

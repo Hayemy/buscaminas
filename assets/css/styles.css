@@ -1,0 +1,78 @@
+/* ================= base ================= */
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,sans-serif;background:#1b1b22;color:#eee;
+     display:flex;flex-direction:column;align-items:center;gap:14px;padding:18px;min-height:100vh}
+h1{margin:0;font-size:1.3rem;letter-spacing:.25em}
+footer{margin-top:auto;opacity:.4;font-size:.75rem}
+
+/* ================= hud ================= */
+#hud{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:center;
+     background:#25252f;padding:10px 14px;border-radius:10px}
+select,button{font:inherit;padding:6px 10px;border-radius:8px;border:1px solid #444;
+     background:#33333f;color:#eee;cursor:pointer}
+.marcador{font-variant-numeric:tabular-nums;background:#111;padding:6px 12px;border-radius:8px;
+     min-width:84px;text-align:center}
+.pista{opacity:.6;font-size:.85rem}
+
+/* ================= tablero ================= */
+#tablero{display:grid;grid-template-columns:repeat(var(--cols,9),var(--tam,30px));gap:2px;
+     touch-action:manipulation}
+.celda{width:var(--tam,30px);height:var(--tam,30px);display:flex;align-items:center;justify-content:center;
+     font-weight:700;background:#4a4a5a;border-radius:4px;user-select:none;cursor:pointer;
+     font-size:calc(var(--tam,30px)*.6);line-height:1}
+.celda:hover{background:#5a5a6e}
+.celda.rev,.celda.rev:hover{background:#2c2c36;cursor:default}
+.celda.boom{background:#e11}
+.n1{color:#6cf}.n2{color:#7e7}.n3{color:#f88}.n4{color:#b9f}
+.n5{color:#fc6}.n6{color:#6ff}.n7{color:#fff}.n8{color:#aaa}
+
+/* ================= derrota: el caos ================= */
+#caos{position:fixed;inset:0;z-index:99;overflow:hidden;display:grid;place-items:center;
+      animation:strobe .1s steps(1) infinite}
+#caos[hidden]{display:none}
+#pila{position:relative;z-index:2;display:grid;justify-items:center;gap:10px}
+#burla{position:relative;z-index:2;text-align:center;font-weight:900;line-height:.95;
+       font-size:clamp(2.2rem,11vw,7rem);color:#fff;padding:0 10px;
+       text-shadow:4px 4px 0 #f0f,-4px -4px 0 #0ff,8px -8px 0 #ff0,-8px 8px 0 #f00;
+       animation:tiembla .07s infinite,gira 1.6s ease-in-out infinite}
+#sub{position:relative;z-index:2;font-size:clamp(1rem,3.5vw,2rem);font-weight:800;color:#000;
+     background:#ff0;padding:6px 14px;border-radius:6px;transform:rotate(-3deg);
+     animation:tiembla .11s infinite}
+#foto{width:min(46vw,30vh);border:6px solid #000;border-radius:12px;
+      box-shadow:0 0 0 8px #0ff,0 0 40px #f0f;
+      animation:tiembla .1s infinite,late .5s ease-in-out infinite}
+.foto3{position:absolute;z-index:5;width:min(40vw,34vh);border:6px solid #000;border-radius:12px;
+       box-shadow:0 0 0 8px #ff0;pointer-events:none;
+       animation:tiembla .08s infinite,late .4s ease-in-out infinite}
+#otra{position:absolute;z-index:3;font-size:clamp(1.1rem,4vw,2.4rem);font-weight:900;
+      padding:14px 26px;border:6px solid #000;border-radius:14px;background:#0f0;color:#000;
+      cursor:pointer;box-shadow:0 0 0 8px #f0f;animation:tiembla .13s infinite}
+#burla2{position:absolute;top:6%;left:50%;transform:translateX(-50%);z-index:4;
+        font-size:clamp(1.2rem,5vw,3rem);font-weight:900;color:#fff;background:#000;
+        padding:10px 18px;border-radius:10px;text-align:center;max-width:92vw;pointer-events:none;
+        animation:tiembla .09s infinite}
+.emoji{position:absolute;font-size:clamp(1.5rem,5vw,3.5rem);z-index:1;pointer-events:none;
+       animation:flota 2s linear infinite}
+
+@keyframes strobe{0%{background:#f0f}17%{background:#0ff}33%{background:#ff0}
+                  50%{background:#f00}67%{background:#0f0}83%{background:#00f}100%{background:#fff}}
+@keyframes tiembla{0%{transform:translate(-6px,4px) rotate(-2deg)}
+                   50%{transform:translate(6px,-5px) rotate(2deg)}
+                   100%{transform:translate(-4px,-3px) rotate(-1deg)}}
+@keyframes gira{0%,100%{letter-spacing:0}50%{letter-spacing:.08em}}
+@keyframes late{0%,100%{scale:1}50%{scale:1.12}}
+@keyframes flota{0%{transform:translateY(0) rotate(0) scale(1)}
+                 50%{transform:translateY(-40px) rotate(180deg) scale(1.6)}
+                 100%{transform:translateY(0) rotate(360deg) scale(1)}}
+
+/* epilepsia fotosensible: el caos se queda, el parpadeo baja a paso de tortuga */
+@media(prefers-reduced-motion:reduce){
+  #caos{animation-duration:1.2s}
+  #burla,#sub,#otra,#burla2,.emoji,#foto,.foto3{animation-duration:3s}
+}
+
+/* ================= victoria ================= */
+#gane{position:fixed;inset:0;z-index:99;background:#0a2;display:grid;place-items:center;gap:16px;
+      align-content:center;text-align:center}
+#gane[hidden]{display:none}
+#gane h2{font-size:clamp(2rem,8vw,5rem);margin:0}
