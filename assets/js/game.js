@@ -4,14 +4,25 @@ const NIVELES={facil:[9,9,10],medio:[16,16,40],dificil:[16,30,99]};
 const RUTA_IMG='assets/img/gato.png';
 const RUTA_MP3='assets/audio/risa.mp3';
 
-const BURLAS=[['💥 PERDISTE 💥','ni los tres primeros clicks aguantaste'],
-              ['😂 JAJAJAJA 😂','eso fue vergonzoso, en serio'],
-              ['🤡 BOOOOM 🤡','una mina. UNA. y le diste tú solito'],
-              ['💀 SE ACABÓ 💀','mi abuela juega mejor y ni tiene mouse'],
-              ['🔥 EXPLOTASTE 🔥','¿probaste usar el cerebro? dicen que ayuda']];
-const BURLAS2=['🤣 ¡NI AL BOTÓN LE PUDISTE DAR! 🤣',
-               '😭 FALLASTE UN BOTÓN QUE MIDE MEDIA PANTALLA 😭',
-               '👏 IMPRESIONANTE. FALLASTE HASTA EL CLICK. 👏'];
+// título gigante + subtítulo amarillo. Se elige uno al azar en cada derrota.
+const BURLAS=[['💥 QUÉ MALPARIDEZ 💥','le dio a la mina, güevón, a la única que había cerca'],
+              ['😂 GONORREA 😂','ni tres clicks aguantó, hermano, tres'],
+              ['🤡 PERDISTE, BOBO 🤡','una mina. UNA. y usted derechito para allá'],
+              ['💀 HIJUEPUTA 💀','mi abuela juega esto sin ojos y no explota'],
+              ['🔥 BOOOOM 🔥','se quemó, malparido. literal. no queda nada.'],
+              ['🚨 QUÉ OSO 🚨','esto lo vio su mamá y le tocó salir del grupo familiar'],
+              ['🧠 SIN CEREBRO 🧠','le sobra dedo y le falta materia gris, parcero'],
+              ['🐀 SE LO COMIÓ 🐀','el gato ya está contando esto en todo el barrio'],
+              ['📉 MALÍSIMO 📉','su técnica es cerrar los ojos y rezarle a la virgen'],
+              ['🪦 R.I.P. 🪦','aquí yace un güevón que le dio clic a la bomba']];
+
+// mensaje al fallar el botón trampa. Uno al azar.
+const BURLAS2=['🤣 ¡NI AL BOTÓN LE DIO, GONORREA! 🤣',
+               '😭 FALLÓ UN BOTÓN DEL TAMAÑO DE SU CABEZA, MALPARIDO 😭',
+               '👏 BRAVO HIJUEPUTA, FALLÓ HASTA EL CLICK 👏',
+               '🐌 SE LE ESCAPÓ UN BOTÓN QUE ESTABA QUIETO, GÜEVÓN 🐌',
+               '📸 ESTO YA LO GRABÉ Y SE LO MANDÉ A SU MAMÁ',
+               '🎪 SEÑORAS Y SEÑORES: EL PAYASO MÁS MALO DEL PAÍS'];
 
 const $=id=>document.getElementById(id);
 const boardEl=$('tablero'),selNivel=$('nivel'),mMinas=$('mMinas'),mTiempo=$('mTiempo');
