@@ -7,15 +7,13 @@ const RUTA_MP3='assets/audio/risa.mp3';
 // título gigante + subtítulo amarillo. Se elige uno al azar en cada derrota.
 const BURLAS=[['💥 QUÉ MALPARIDEZ 💥','le dio a la mina, aguevad@'],
               ['😂 GONORREA 😂','ni tres clicks aguantó, bro, tres'],
-              ['🤡 HIJUEPUTA🤡','una mina. UNA. y usted derechito para allá'],
-              ['💀 ENCHIMBADO 💀','mi abuelita juega sin gafas y gana'],
-              ['🔥 BOOOOM 🔥','se quemó, malparido.'],
+              ['🤡 HIJUEPUTA ENCHIMBADO🤡','una mina. UNA. y usted derechito para allá'],
               ['🪦 R.I.P. 🪦','aquí yace un marica que le dio clic a la bomba']];
 
 // mensaje al fallar el botón trampa. Uno al azar.
-const BURLAS2=['🤣 ¡NI AL BOTÓN LE DIO, QUE GONORREA! 🤣',
+const BURLAS2=['🤣 ¡NI AL BOTÓN LE DIO ESTA GONORREA! 🤣',
                '😭 FALLÓ UN BOTÓN, AGUEVADO 😭',
-               '👏 BRAVO HIJUEPUTA, FALLÓ HASTA EL CLICK 👏',
+               '👏 BRAVO HIJUEPUTA, FALLÓ  EL CLICK 👏',
                '🐌 SE LE ESCAPÓ UN BOTÓN QUE ESTABA QUIETO, JSJFDJC 🐌',
                '📸 OLEEEEEEE JAJAJAJAJAJJA'];
 
@@ -121,7 +119,8 @@ function perder(){
     e.style.animationDelay=-Math.random()*2+'s';
     caos.appendChild(e);
   }
-  otra.style.left='50%';otra.style.top='75%';otra.style.transform='translate(-50%,-50%)';
+  // translate y no transform: transform lo pisa la animación tiembla
+  otra.style.left='50%';otra.style.top='75%';otra.style.translate='-50% -50%';
   caos.hidden=false;
 }
 
@@ -135,7 +134,7 @@ function esquivar(ev){                  // la trampa: una vez por partida
   const esquinas=[[m,m],[innerWidth-w-m,m],[m,innerHeight-h-m],[innerWidth-w-m,innerHeight-h-m]];
   const [x,y]=esquinas.reduce((a,b)=>   // a la esquina más lejana del cursor, nunca al lado
     Math.hypot(b[0]+w/2-px,b[1]+h/2-py)>Math.hypot(a[0]+w/2-px,a[1]+h/2-py)?b:a);
-  otra.style.transform='none';
+  otra.style.translate='0';
   otra.style.left=x+'px';otra.style.top=y+'px';
   const msg=document.createElement('div');
   msg.id='burla2';msg.className='extra';
