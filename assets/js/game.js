@@ -5,24 +5,19 @@ const RUTA_IMG='assets/img/gato.png';
 const RUTA_MP3='assets/audio/risa.mp3';
 
 // título gigante + subtítulo amarillo. Se elige uno al azar en cada derrota.
-const BURLAS=[['💥 QUÉ MALPARIDEZ 💥','le dio a la mina, güevón, a la única que había cerca'],
-              ['😂 GONORREA 😂','ni tres clicks aguantó, hermano, tres'],
-              ['🤡 PERDISTE, BOBO 🤡','una mina. UNA. y usted derechito para allá'],
-              ['💀 HIJUEPUTA 💀','mi abuela juega esto sin ojos y no explota'],
-              ['🔥 BOOOOM 🔥','se quemó, malparido. literal. no queda nada.'],
-              ['🚨 QUÉ OSO 🚨','esto lo vio su mamá y le tocó salir del grupo familiar'],
-              ['🧠 SIN CEREBRO 🧠','le sobra dedo y le falta materia gris, parcero'],
-              ['🐀 SE LO COMIÓ 🐀','el gato ya está contando esto en todo el barrio'],
-              ['📉 MALÍSIMO 📉','su técnica es cerrar los ojos y rezarle a la virgen'],
-              ['🪦 R.I.P. 🪦','aquí yace un güevón que le dio clic a la bomba']];
+const BURLAS=[['💥 QUÉ MALPARIDEZ 💥','le dio a la mina, aguevad@'],
+              ['😂 GONORREA 😂','ni tres clicks aguantó, bro, tres'],
+              ['🤡 HIJUEPUTA🤡','una mina. UNA. y usted derechito para allá'],
+              ['💀 ENCHIMBADO 💀','mi abuelita juega sin gafas y gana'],
+              ['🔥 BOOOOM 🔥','se quemó, malparido.'],
+              ['🪦 R.I.P. 🪦','aquí yace un marica que le dio clic a la bomba']];
 
 // mensaje al fallar el botón trampa. Uno al azar.
-const BURLAS2=['🤣 ¡NI AL BOTÓN LE DIO, GONORREA! 🤣',
-               '😭 FALLÓ UN BOTÓN DEL TAMAÑO DE SU CABEZA, MALPARIDO 😭',
+const BURLAS2=['🤣 ¡NI AL BOTÓN LE DIO, QUE GONORREA! 🤣',
+               '😭 FALLÓ UN BOTÓN, AGUEVADO 😭',
                '👏 BRAVO HIJUEPUTA, FALLÓ HASTA EL CLICK 👏',
-               '🐌 SE LE ESCAPÓ UN BOTÓN QUE ESTABA QUIETO, GÜEVÓN 🐌',
-               '📸 ESTO YA LO GRABÉ Y SE LO MANDÉ A SU MAMÁ',
-               '🎪 SEÑORAS Y SEÑORES: EL PAYASO MÁS MALO DEL PAÍS'];
+               '🐌 SE LE ESCAPÓ UN BOTÓN QUE ESTABA QUIETO, JSJFDJC 🐌',
+               '📸 OLEEEEEEE JAJAJAJAJAJJA'];
 
 const $=id=>document.getElementById(id);
 const boardEl=$('tablero'),selNivel=$('nivel'),mMinas=$('mMinas'),mTiempo=$('mTiempo');
