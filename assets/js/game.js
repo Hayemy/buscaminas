@@ -119,8 +119,7 @@ function perder(){
     e.style.animationDelay=-Math.random()*2+'s';
     caos.appendChild(e);
   }
-  // translate y no transform: transform lo pisa la animación tiembla
-  otra.style.left='50%';otra.style.top='75%';otra.style.translate='-50% -50%';
+  otra.style.position=otra.style.left=otra.style.top='';   // vuelve al flujo si esquivó en la partida anterior
   caos.hidden=false;
 }
 
@@ -134,7 +133,7 @@ function esquivar(ev){                  // la trampa: una vez por partida
   const esquinas=[[m,m],[innerWidth-w-m,m],[m,innerHeight-h-m],[innerWidth-w-m,innerHeight-h-m]];
   const [x,y]=esquinas.reduce((a,b)=>   // a la esquina más lejana del cursor, nunca al lado
     Math.hypot(b[0]+w/2-px,b[1]+h/2-py)>Math.hypot(a[0]+w/2-px,a[1]+h/2-py)?b:a);
-  otra.style.translate='0';
+  otra.style.position='fixed';                // sale del flujo para poder huir a la esquina
   otra.style.left=x+'px';otra.style.top=y+'px';
   const msg=document.createElement('div');
   msg.id='burla2';msg.className='extra';

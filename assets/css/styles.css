@@ -46,7 +46,8 @@ select,button{font:inherit;padding:6px 10px;border-radius:8px;border:1px solid #
 .foto3{position:absolute;z-index:5;width:min(40vw,34vh);border:6px solid #000;border-radius:12px;
        box-shadow:0 0 0 8px #ff0;pointer-events:none;
        animation:tiembla .15s infinite,late .4s ease-in-out infinite}
-#otra{position:absolute;z-index:3;font-size:clamp(1.1rem,4vw,2.4rem);font-weight:900;
+/* en el flujo de #pila: asi nunca pisa al subtitulo. Solo pasa a fixed al esquivar. */
+#otra{position:relative;z-index:3;font-size:clamp(1.1rem,4vw,2.4rem);font-weight:900;
       padding:14px 26px;border:6px solid #000;border-radius:14px;background:#0f0;color:#000;
       --amp:clamp(8px,2vmin,18px);/* poco: hay que poder darle click */
       cursor:pointer;box-shadow:0 0 0 8px #f0f;animation:tiembla .26s infinite}
